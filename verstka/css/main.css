@@ -16,9 +16,7 @@ body {
 	margin-left: .5em;
 }
 
-.tabs > div.selected {
-	cursor: default;
-}
+.tabs > div.selected { cursor: default; }
 
 .tabs > div::before {
 	content: "";
@@ -44,16 +42,21 @@ body {
 	bottom: 1.5em;
 }
 
-.content > div.selected {
-	display: block;
-}
+.content > div.selected { display: block; }
 
 .content > div {
 	display: none;
 	padding: 1em;
 }
 
-.content input[type='text'] {
-	width: 100%;
-} 
+.content input[type='text'] { width: 100%; } 
 
+.content .uk-progress { height: 100%; }
+
+.content .uk-progress .uk-progress-bar { padding-top: .4em; }
+
+.content .import-result {
+	margin-top: 3em;
+	border: 1px solid black;
+	padding: 1em 2em;
+}
