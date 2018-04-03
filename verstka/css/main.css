@@ -41,9 +41,7 @@ body { padding: 1.5em; }
 
 .content input[type='text'] { width: 100%; } 
 
-.content .uk-progress { height: 100%; }
-
-.content .uk-progress .uk-progress-bar { padding-top: .4em; }
+.content .uk-progress { margin-top: .4em; }
 
 .content .import .import-result {
 	border: 1px solid black;
@@ -54,12 +52,14 @@ body { padding: 1.5em; }
 
 .content .find-result div:nth-child(2) { margin-top: 2em; }
 
-.content .article > div {
+.content .article {
 	border: 1px solid black;
 	padding-left: 1.5em;
-	min-height: 30em;
-	max-height: 60em;
 	overflow: auto;
 }
 
 .content .import > div:last-child { overflow-y: auto; }
+
+.content .find-result, .content .article { overflow: auto; height: 100%; }
+
+.hide-elements { display: none; }
