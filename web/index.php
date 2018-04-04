@@ -2,7 +2,7 @@
 // web/index.php
 require_once __DIR__.'/../vendor/autoload.php';
 
-$app = new Silex\Application();
+/*$app = new Silex\Application();
 
 $app->get('/', function() use($app) {
     return 'Hello, World!';
@@ -12,3 +12,9 @@ $app->get('/', function() use($app) {
 });
 
 $app->run();
+*/
+
+$bootstrap = new \Application\Bootstrap();
+
+$bootstrap->run();
+        

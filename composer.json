@@ -1,5 +1,11 @@
 {
     "require": {
-        "silex/silex": "~2.0"
+        "silex/silex": "~2.0",
+        "twig/twig": "^1.35"
+    },
+    "autoload" : {
+    	"psr-4" : {
+    		"Application\\" : "app/"
+    	}
     }
 }
