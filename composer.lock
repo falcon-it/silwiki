@@ -4,6 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+    "hash": "8298da1ea80b2739abd0ec48915d54bb",
     "content-hash": "85580c396ae95ecbc98237183ee64481",
     "packages": [
         {
@@ -52,7 +53,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-09-27T21:40:39+00:00"
+            "time": "2017-09-27 21:40:39"
         },
         {
             "name": "pimple/pimple",
@@ -102,7 +103,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2018-01-21T07:42:36+00:00"
+            "time": "2018-01-21 07:42:36"
         },
         {
             "name": "psr/container",
@@ -151,7 +152,7 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2017-02-14T16:28:37+00:00"
+            "time": "2017-02-14 16:28:37"
         },
         {
             "name": "psr/log",
@@ -198,7 +199,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "silex/silex",
@@ -287,7 +288,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2018-03-16T23:34:20+00:00"
+            "time": "2018-03-16 23:34:20"
         },
         {
             "name": "symfony/debug",
@@ -343,7 +344,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-04-03T05:22:50+00:00"
+            "time": "2018-04-03 05:22:50"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -406,7 +407,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2018-02-14T10:03:57+00:00"
+            "time": "2018-02-14 10:03:57"
         },
         {
             "name": "symfony/http-foundation",
@@ -460,7 +461,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2018-04-03T05:22:50+00:00"
+            "time": "2018-04-03 05:22:50"
         },
         {
             "name": "symfony/http-kernel",
@@ -548,7 +549,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2018-04-03T05:49:44+00:00"
+            "time": "2018-04-03 05:49:44"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -607,7 +608,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-01-30T19:27:44+00:00"
+            "time": "2018-01-30 19:27:44"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -666,7 +667,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-01-30T19:27:44+00:00"
+            "time": "2018-01-30 19:27:44"
         },
         {
             "name": "symfony/routing",
@@ -744,7 +745,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2018-03-23T08:14:09+00:00"
+            "time": "2018-03-23 08:14:09"
         },
         {
             "name": "twig/twig",
@@ -809,7 +810,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-03-20T04:25:58+00:00"
+            "time": "2018-03-20 04:25:58"
         }
     ],
     "packages-dev": [],
