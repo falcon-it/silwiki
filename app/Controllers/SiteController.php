@@ -14,18 +14,20 @@
 
 namespace Application\Controllers;
 
-class SiteController {
-    private $app;
+use Silex\Application;
+use Silex\Api\ControllerProviderInterface;
+
+class SiteController implements ControllerProviderInterface {
     
-    public function __construct($app) {
-        $this->app = $app;
-        $this->initRoutines();
+    public function connect(Application $app) {
+        $controllers = $app['controllers_factory'];
+        $controllers->get('/', function (Application $app) { 
+            return $this->indexAction($app);
+        });
+        return $controllers;
     }
     
-    private function initRoutines() {
-        $app = $this->app;
-        $app->get('/', function() use($app) { 
-            return $app['twig']->render('index.twig', array( 'title' => 'Wiki Test!'));
-        });
+    public function indexAction(Application $app) {
+        return $app['twig']->render('index.twig', array( 'title' => 'Wiki Test!'));
     }
 }
