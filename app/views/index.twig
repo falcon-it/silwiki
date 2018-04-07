@@ -1,5 +1,140 @@
-{# empty Twig template #}
-
-<p>
-    {{ name }}
-</p>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.5/css/uikit.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.5/css/components/progress.almost-flat.min.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.27.5/js/uikit.min.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+    <body>
+    	<div class="tabs">
+    		<div class="selected">Импорт статей</div>
+    		<div>Поиск</div>
+    	</div>
+    	<div class="content uk-overflow-container">
+    		<div class="selected import">
+                <div class="uk-form uk-grid">
+                    <div class="uk-width-3-10">
+                    	<div>
+                    		<input type="text" name="find" />
+                    	</div>
+                    </div>
+                    <div class="uk-width-1-10">
+                    	<div>
+                        	<button class="uk-button uk-button-primary">Скопировать</button>
+                    	</div>
+                    </div>
+                    <div class="uk-width-6-10">
+                    	<div class="hide-elements">
+                        	<div class="uk-progress">
+                            	<div class="uk-progress-bar" style="width: 40%;">40%</div>
+                        	</div>
+                    	</div>
+                    </div>
+                </div>
+                <div class="uk-grid hide-elements">
+                	<div class="uk-width-2-3">
+		                <div class="import-result">
+		                    <h3>Импорт завершён</h3>
+		                    <div>
+		                        Найдено статья по адресу: <a href="#">wiki</a> <br />
+		                        Время обработки: 1мин <br />
+		                        Размер: 122kb <br />
+		                        Количество слов: 1454 
+		                    </div>
+		                </div>
+	            	</div>
+            	</div>
+                <hr class="uk-grid-divider" />
+                <div class="uk-overflow-container">
+                	<div>
+	                	<table class="uk-table uk-table-striped">
+	                		<thead>
+	                			<tr>
+	                				<th class="uk-width-3-10">Название статьи</th>
+	                				<th class="uk-width-1-2">Ссылки</th>
+	                				<th class="uk-width-1-10">Размер статьи</th>
+	                				<th class="uk-width-1-10">Количество слов</th>
+	                			</tr>
+	                		</thead>
+	                		<tbody>
+	                			<tr>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                			</tr>
+	                			<tr>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                			</tr>
+	                			<tr>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                			</tr>
+	                			<tr>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                				<td>ertije</td>
+	                			</tr>
+	                		</tbody>
+	                	</table>
+                	</div>
+                </div>
+            </div>
+    		<div class="find">
+                <div class="uk-form uk-grid">
+                    <div class="uk-width-3-10">
+                    	<div>
+                    		<input type="text" name="inp_find" />
+                    	</div>
+                    </div>
+                    <div class="uk-width-1-10">
+                    	<div>
+                        	<button class="uk-button uk-button-primary">Найти</button>
+                    	</div>
+                    </div>
+                </div>
+                <hr class="uk-grid-divider" />
+                <div class="uk-grid">
+                	<div class="uk-width-1-2">
+                		<div class="find-result">
+                			<div>Найдено: 31 совпадение</div>
+                			<div><span class="uk-text-large">Липецк</span> <span class="uk-text-small">(22 вхождений)</span></div>
+                			<ul class="uk-list uk-list-space">
+                				<li><span class="uk-text-large"><a href="#">Липецкая область</a></span> <span class="uk-text-small">(15 вхождений)</span></li>
+                				<li><span class="uk-text-large"><a href="#">Липецкий курорт</a></span> <span class="uk-text-small">(8 вхождений)</span></li>
+                			</ul>
+                		</div>
+                	</div>
+                	<div class="uk-width-1-2">
+                		<div class="article">
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                			<p>pogtripwojgpoire</p>
+                		</div>
+                	</div>
+                </div>
+    		</div>
+    	</div>
+    </body>
+</html>

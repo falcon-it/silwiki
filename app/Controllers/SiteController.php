@@ -25,10 +25,7 @@ class SiteController {
     private function initRoutines() {
         $app = $this->app;
         $app->get('/', function() use($app) { 
-            return $app['twig']->render('index.twig', array(
-        'name' => 'Hello, World!'
-    ));
-            
+            return $app['twig']->render('index.twig', array( 'title' => 'Wiki Test!'));
         });
     }
 }
