@@ -34,7 +34,6 @@ class ConsoleWiki implements ServiceProviderInterface {
     }
     
     public function run() {
-        var_dump($this->args);
         while ($this->runStep());
     }
 }

@@ -15,6 +15,10 @@
 namespace Application;
 
 use Silex\Application;
+use Silex\Provider\TwigServiceProvider;
+use Application\Console\ConsoleWiki;
+use Application\Controllers\SiteController;
+use Application\Base\Connection;
 
 class Bootstrap {
     protected $app;
@@ -23,15 +27,29 @@ class Bootstrap {
         $this->app = new Application();
     }
     
-    private function baseCoofigure() {
-        $this->app->register(new \Application\Console\ConsoleWiki());
+    private function baseConfigure() {
+        $this->app->register(
+                new Connection(), 
+                array(
+                    'connection.host' => 'localhost',
+                    'connection.user' => 'root',
+                    'connection.pwd' => '123456',
+                    'connection.db' => 'wiki'
+                )
+                );
+        $this->app->register(new ConsoleWiki());
     }
     
     public function console($argv) {
-        $this->baseCoofigure();
+        $this->baseConfigure();
         
         $command = false;
         $args = array();
+        $recordSet = $this->app['connection']()->Execute('select count(*) from articles');
+        while (!$recordSet->EOF) {
+            echo 'ok: '.$recordSet->fields[0];
+            $recordSet->MoveNext();
+        }
         
         if(count($argv) > 1) { $command = $argv[1]; }
         if(count($argv) > 2) { $args = array_slice($argv, 2); }
@@ -39,11 +57,11 @@ class Bootstrap {
     }
     
     public function run() {
-        $this->baseCoofigure();
+        $this->baseConfigure();
         $this->app->register(
-                new \Silex\Provider\TwigServiceProvider(), 
+                new TwigServiceProvider(), 
                 array('twig.path' => __DIR__.'/views'));
-        $this->app->mount('/', new \Application\Controllers\SiteController());
+        $this->app->mount('/', new SiteController());
         $this->app->run();
     }
 }
