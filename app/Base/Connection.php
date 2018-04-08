@@ -17,18 +17,24 @@ namespace Application\Base;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
+require_once __DIR__.'/../../library/adodb5/adodb.inc.php';
+require_once __DIR__.'/../../library/adodb5/adodb-active-record.inc.php';
+
 class Connection implements ServiceProviderInterface {
 
     public function register(Container $app) {
-        $app['connection'] = $app->protect(function() use($app) {
-            require_once __DIR__.'/../../library/adodb5/adodb.inc.php';
+        $app['connection'] = function($app) {
             $db = adoNewConnection('mysqli');
             $db->connect(
                     $app['connection.host'], 
                     $app['connection.user'], 
                     $app['connection.pwd'], 
                     $app['connection.db']);
+            $db->setCharset('utf8');
+            \ADOdb_Active_Record::SetDatabaseAdapter($db);
+            \ADODB_Active_Record :: TableHasMany('articles', 'links', 'acticle_id');
+            //\ADODB_Active_Record :: ClassHasMany('Application\Models\Article', 'Application\Models\Link', 'acticle_id');
             return $db;
-        });
+        };
     }
 }

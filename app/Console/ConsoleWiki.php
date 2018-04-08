@@ -16,8 +16,11 @@ namespace Application\Console;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Application\Base\ConsoleCommand;
+use Application\Wiki\State;
+use Application\Wiki\Handler;
 
-class ConsoleWiki implements ServiceProviderInterface {
+class ConsoleWiki implements ServiceProviderInterface, ConsoleCommand {
     private $app;
     private $args;
     
@@ -29,11 +32,23 @@ class ConsoleWiki implements ServiceProviderInterface {
         });
     }
     
-    public function runStep() {
-        return false;
-    }
-    
     public function run() {
-        while ($this->runStep());
+        $s = new State($this->args[0]);
+        
+        while(true) {
+            $exit = false;
+            
+            Handler::Execute($s, $this->app);
+            
+            switch ($s->state) {
+                case State::WIKI_NOT_FOUND:
+                case State::OK:
+                case State::ERROR:
+                    $exit = true;
+                    break;
+            }
+            
+            if($exit) { break; }
+        }
     }
 }

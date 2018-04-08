@@ -28,6 +28,19 @@ class SiteController implements ControllerProviderInterface {
     }
     
     public function indexAction(Application $app) {
-        return $app['twig']->render('index.twig', array( 'title' => 'Wiki Test!'));
+        $articles = $app['article']()->find('');
+        //var_dump($articles->links);
+        $art_ar = array();
+        foreach ($articles as $item) {
+            $art_ar[] = array(
+                'title' => $item->title,
+                'link' => $item->link,
+                'size' => $item->size,
+                'count' => count($item->links)
+            );
+            //var_dump($item->links);
+            //$art_ar
+        }
+        return $app['twig']->render('index.twig', array('title' => 'Wiki Test!', 'articles' => $art_ar));
     }
 }

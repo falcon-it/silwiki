@@ -61,30 +61,14 @@
 	                			</tr>
 	                		</thead>
 	                		<tbody>
+                                            {% for article in articles %}
 	                			<tr>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
+	                				<td>{{ article.title }}</td>
+                                                        <td><a href="{{ article.link }}">{{ article.link }}</a></td>
+	                				<td>{{ article.size }} байт</td>
+	                				<td>{{ article.count }}</td>
 	                			</tr>
-	                			<tr>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                			</tr>
-	                			<tr>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                			</tr>
-	                			<tr>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                				<td>ertije</td>
-	                			</tr>
+                                            {% endfor %}
 	                		</tbody>
 	                	</table>
                 	</div>

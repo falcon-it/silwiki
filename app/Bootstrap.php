@@ -19,6 +19,7 @@ use Silex\Provider\TwigServiceProvider;
 use Application\Console\ConsoleWiki;
 use Application\Controllers\SiteController;
 use Application\Base\Connection;
+use Application\Models\Models;
 
 class Bootstrap {
     protected $app;
@@ -36,16 +37,22 @@ class Bootstrap {
                     'connection.pwd' => '123456',
                     'connection.db' => 'wiki'
                 )
-                );
-        $this->app->register(new ConsoleWiki());
+            );
+        $this->app->register(
+                new Models(), 
+                array(
+                    'article.connection' => $this->app['connection']
+                )
+            );
     }
     
     public function console($argv) {
         $this->baseConfigure();
+        $this->app->register(new ConsoleWiki());
         
         $command = false;
         $args = array();
-        $recordSet = $this->app['connection']()->Execute('select count(*) from articles');
+        $recordSet = $this->app['connection']->Execute('select count(*) from articles');
         while (!$recordSet->EOF) {
             echo 'ok: '.$recordSet->fields[0];
             $recordSet->MoveNext();
@@ -53,14 +60,21 @@ class Bootstrap {
         
         if(count($argv) > 1) { $command = $argv[1]; }
         if(count($argv) > 2) { $args = array_slice($argv, 2); }
-        if(!empty($command)) { $this->app["console.$command"]($args)->run(); }
+        
+        echo "console command: $command\n";
+        try {
+            if(!empty($command)) { $this->app["console.$command"]($args)->run(); }
+        }
+        catch(Exception $e) {
+            echo "Exception: {$e->getMessage()}\n";
+        }
     }
     
     public function run() {
         $this->baseConfigure();
         $this->app->register(
                 new TwigServiceProvider(), 
-                array('twig.path' => __DIR__.'/views'));
+                array('twig.path' => __DIR__.'/views', 'twig.cache' => false));
         $this->app->mount('/', new SiteController());
         $this->app->run();
     }
