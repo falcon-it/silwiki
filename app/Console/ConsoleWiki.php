@@ -41,6 +41,7 @@ class ConsoleWiki implements ServiceProviderInterface, ConsoleCommand {
             Handler::Execute($s, $this->app);
             
             switch ($s->state) {
+                case State::ART_SAVE_FAIL:
                 case State::WIKI_NOT_FOUND:
                 case State::OK:
                 case State::ERROR:

@@ -31,9 +31,10 @@ CREATE TABLE atoms
 CREATE TABLE links
 (
     atom_id INT NOT NULL,
-    acticle_id INT NOT NULL,
+    article_id INT NOT NULL,
     counter INT NOT NULL DEFAULT 1,
-    UNIQUE INDEX (atom_id, acticle_id),
+    UNIQUE INDEX (atom_id, article_id),
+    INDEX (article_id),
     CONSTRAINT FK_atoms_links_id FOREIGN KEY (atom_id) REFERENCES atoms(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_articles_links_id FOREIGN KEY (acticle_id) REFERENCES  articles(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FK_articles_links_id FOREIGN KEY (article_id) REFERENCES  articles(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

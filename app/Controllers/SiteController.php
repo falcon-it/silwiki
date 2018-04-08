@@ -32,15 +32,15 @@ class SiteController implements ControllerProviderInterface {
         //var_dump($articles->links);
         $art_ar = array();
         foreach ($articles as $item) {
-            $art_ar[] = array(
+            $art_ar[$item->id] = array(
                 'title' => $item->title,
                 'link' => $item->link,
                 'size' => $item->size,
-                'count' => count($item->links)
+                'count' => 0
             );
-            //var_dump($item->links);
-            //$art_ar
         }
+        $art_ids = array_keys($art_ar);
+        //select article_id, count(*) from links  group by article_id
         return $app['twig']->render('index.twig', array('title' => 'Wiki Test!', 'articles' => $art_ar));
     }
 }

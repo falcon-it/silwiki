@@ -173,6 +173,13 @@ class Handler {
     
     private static function saveArticle(State $s, Application $app) {
         $article = $app['article']();
+        if(count($article->find('title=?', array($s->data['title']))) > 0) {
+            $s->state = State::ART_SAVE_FAIL;
+            $s->message = "Article {$s->query} exists";
+            return;
+        }
+        
+        $article = $app['article']();
         
         $article->title = $s->data['title'];
         $article->link = $s->data['link'];
@@ -221,7 +228,7 @@ class Handler {
             if($atom_id !== false) {
                 $link = $app['link']();
                 $link->atom_id = $atom_id;
-                $link->acticle_id = $s->data['article_id'];
+                $link->article_id = $s->data['article_id'];
                 $link->counter = $count;
                 $link->save();
             }

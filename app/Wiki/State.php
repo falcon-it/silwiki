@@ -21,6 +21,7 @@ class State {
     const WIKI_PAGE_OK = 10;
     const ART_CLEAR = 3;
     const ART_SAVE = 4;
+    const ART_SAVE_FAIL = 5;
     const ATOMS_SORT = 6;
     const ATOMS_SAVE = 7;
     const OK = 8;
