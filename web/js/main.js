@@ -21,6 +21,30 @@ function set_size_elements() {
 $(window).on('load', function () { set_size_elements(); });
 $(window).on('resize', function () { set_size_elements(); });
 
+function Copy(query) {
+    this._post = function() {
+        $.post("/copy/", { query : this._query }, this.callback);
+    };
+    
+    this._callback = function(data, textStatus, jqXHR) {
+        alert(data);
+    };
+    
+    this._init = function() {
+        $("#progress-id").removeClass("hide-elements").find(".uk-progress-bar").css("width", 0).text("Запуск...");
+        $(".content .import button").attr("disabled", true);
+        this._post();
+    };
+    
+    this._exit = function() {
+        $(".content .import button").attr("disabled", false);
+        $("#progress-id").addClass("hide-elements");
+    }
+    
+    this._query = query;
+    this._init();
+}
+
 $(document).ready(function() {
 	$(".tabs > div").click(function() {
 		if(!$(this).hasClass("selected")) {
@@ -30,7 +54,6 @@ $(document).ready(function() {
 		}
 	});
         $(".content .import button").click(function() {
-            //alert($(".content .import input").val());
-            $.post("/copy/", { query : $(".content .import input").val() }).error(function() {}).complete(function() {alert('rt5eiojsdio');});
+            Copy($(".content .import input").val());
         });
 });

@@ -17,6 +17,7 @@ namespace Application\Controllers;
 use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
 use Application\Models\Link;
+use Symfony\Component\HttpFoundation\Request;
 
 class SiteController implements ControllerProviderInterface {
     
@@ -52,6 +53,8 @@ class SiteController implements ControllerProviderInterface {
     }
     
     public function copyAction(Application $app) {
+        $req = Request::createFromGlobals();
+        var_dump($req->get('query'));
         return 'hello';
     }
 }

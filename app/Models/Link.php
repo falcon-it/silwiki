@@ -20,6 +20,7 @@ class Link extends \ADOdb_Active_Record {
     public $_table = 'links';
     
     public static function getAtomCount(Application $app, $articles) {
+        if(is_array($articles) && empty($articles)) { return $articles; }
         $sql = 'select article_id, count(*) as count from links where article_id in ('.implode(',', $articles).') group by article_id';
         $resAr = array();
         $result = $app['connection']->execute($sql);
