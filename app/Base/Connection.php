@@ -17,8 +17,8 @@ namespace Application\Base;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
-require_once __DIR__.'/../../library/adodb5/adodb.inc.php';
-require_once __DIR__.'/../../library/adodb5/adodb-active-record.inc.php';
+require_once __DIR__.'/../../vendor/adodb/adodb-php/adodb.inc.php';
+require_once __DIR__.'/../../vendor/adodb/adodb-php/adodb-active-record.inc.php';
 
 class Connection implements ServiceProviderInterface {
 
@@ -31,6 +31,7 @@ class Connection implements ServiceProviderInterface {
                     $app['connection.pwd'], 
                     $app['connection.db']);
             $db->setCharset('utf8');
+            //$db->debug = true;
             \ADOdb_Active_Record::SetDatabaseAdapter($db);
             \ADODB_Active_Record :: TableHasMany('articles', 'links', 'acticle_id');
             //\ADODB_Active_Record :: ClassHasMany('Application\Models\Article', 'Application\Models\Link', 'acticle_id');

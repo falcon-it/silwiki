@@ -16,6 +16,7 @@ namespace Application\Controllers;
 
 use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
+use Application\Models\Link;
 
 class SiteController implements ControllerProviderInterface {
     
@@ -24,12 +25,14 @@ class SiteController implements ControllerProviderInterface {
         $controllers->get('/', function (Application $app) { 
             return $this->indexAction($app);
         });
+        $controllers->post('/copy/', function (Application $app) { 
+            return $this->copyAction($app);
+        });
         return $controllers;
     }
     
     public function indexAction(Application $app) {
         $articles = $app['article']()->find('');
-        //var_dump($articles->links);
         $art_ar = array();
         foreach ($articles as $item) {
             $art_ar[$item->id] = array(
@@ -39,8 +42,16 @@ class SiteController implements ControllerProviderInterface {
                 'count' => 0
             );
         }
-        $art_ids = array_keys($art_ar);
-        //select article_id, count(*) from links  group by article_id
+        $countAr = Link::getAtomCount($app, array_keys($art_ar));
+        foreach($countAr as $countItem) {
+            if(isset($art_ar[$countItem['article_id']])) {
+                $art_ar[$countItem['article_id']]['count'] = $countItem['count'];
+            }
+        }
         return $app['twig']->render('index.twig', array('title' => 'Wiki Test!', 'articles' => $art_ar));
+    }
+    
+    public function copyAction(Application $app) {
+        return 'hello';
     }
 }

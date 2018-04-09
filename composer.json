@@ -1,7 +1,8 @@
 {
     "require": {
         "silex/silex": "~2.0",
-        "twig/twig": "^1.35"
+        "twig/twig": "^1.35",
+        "adodb/adodb-php": "^5.20"
     },
     "autoload" : {
     	"psr-4" : {

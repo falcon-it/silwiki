@@ -34,7 +34,7 @@ class Bootstrap {
                 array(
                     'connection.host' => 'localhost',
                     'connection.user' => 'root',
-                    'connection.pwd' => '123456',
+                    'connection.pwd' => '',
                     'connection.db' => 'wiki'
                 )
             );

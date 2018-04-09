@@ -29,4 +29,8 @@ $(document).ready(function() {
 			set_size_elements();
 		}
 	});
+        $(".content .import button").click(function() {
+            //alert($(".content .import input").val());
+            $.post("/copy/", { query : $(".content .import input").val() }).error(function() {}).complete(function() {alert('rt5eiojsdio');});
+        });
 });

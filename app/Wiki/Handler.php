@@ -182,14 +182,18 @@ class Handler {
         $article = $app['article']();
         
         $article->title = $s->data['title'];
+        $article->date = date('Y-m-d H:i:s');
         $article->link = $s->data['link'];
         $article->article = $s->data['text'];
         $article->size = strlen($s->data['text']);
         $article->save();
+        //var_dump($article->save());
         
         $s->data['article_id'] = $article->id;
+        //var_dump($article->id);
 
         $s->state = State::ART_SAVE;
+        //$s->state = State::ART_SAVE_FAIL;
     }
     
     private static function atomsSort(State $s) {
