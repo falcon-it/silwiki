@@ -31,9 +31,20 @@ class State {
     public $query;
     public $data;
     public $message;
+    public $time;
 
     public function __construct($query) {
         $this->state = State::INIT;
         $this->query = $query;
+        $this->time = 0;
+    }
+    
+    public function getAtomsSaveProcess() {
+        if(isset($this->data['atoms_count']) && 
+                isset($this->data['atoms'])) {
+            return 100 - ((count($this->data['atoms']) / $this->data['atoms_count']) * 100);
+        }
+        
+        return 0;
     }
 }

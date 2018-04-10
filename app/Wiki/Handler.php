@@ -19,7 +19,10 @@ use Application\Wiki\State;
 use Silex\Application;
 
 class Handler {
+    const ATOM_SAVE_STEP = 20;
     public static function Execute(State $s, Application $app) {
+        $time = time();
+        
         switch ($s->state) {
             case State::INIT:
                 Handler::queryWiki($s);
@@ -43,6 +46,8 @@ class Handler {
                 $s->state = State::ERROR;
                 $s->message = 'Error fail state';
         }
+        
+        $s->time += time() - $time;
     }
     
     private static function queryWiki(State $s) {
@@ -185,7 +190,8 @@ class Handler {
         $article->date = date('Y-m-d H:i:s');
         $article->link = $s->data['link'];
         $article->article = $s->data['text'];
-        $article->size = strlen($s->data['text']);
+        $s->data['article_size'] = strlen($s->data['text']);
+        $article->size = $s->data['article_size'];
         $article->save();
         //var_dump($article->save());
         
@@ -203,12 +209,13 @@ class Handler {
         $count_ar = array_count_values ($atosm);
         
         $s->data['atoms'] = $count_ar;
+        $s->data['atoms_count'] = count($count_ar);
         
         $s->state = State::ATOMS_SAVE;
     }
     
     private static function atomsSave(State $s, Application $app) {
-        $step = 20;
+        $step = Handler::ATOM_SAVE_STEP;
         $atom_count_all = count($s->data['atoms']);
         $atom_copy = ($atom_count_all > $step) ? $step : $atom_count_all;
         

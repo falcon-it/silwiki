@@ -22,27 +22,48 @@ $(window).on('load', function () { set_size_elements(); });
 $(window).on('resize', function () { set_size_elements(); });
 
 function Copy(query) {
-    this._post = function() {
-        $.post("/copy/", { query : this._query }, this.callback);
+    var state = {};
+    
+    state.callback = function(data, textStatus, jqXHR) {
+        if(data.result == 'ok') {
+            if(data.exit) {
+                $("#progress-id .uk-progress-bar").css("width", "100%").text("Успешно");
+                $("#process-result").removeClass("hide-elements").find(".import-result > div").html(data.message);
+                setTimeout(function() {
+                    state.exit();
+                }, 3000);
+            }
+            else {
+                $("#progress-id .uk-progress-bar").css("width", data.process + "%").text(data.process + "%");
+                state.post();
+            }
+        }
+        else {
+            $("#progress-id .uk-progress-bar").css("width", "100%").text("Ошибка!!!");
+            setTimeout(function() {
+                state.exit();
+            }, 3000);
+        }
     };
     
-    this._callback = function(data, textStatus, jqXHR) {
-        alert(data);
+    state.post = function() {
+        $.post("/copy/", { query : state.query }, state.callback);
     };
     
-    this._init = function() {
+    state.init = function() {
         $("#progress-id").removeClass("hide-elements").find(".uk-progress-bar").css("width", 0).text("Запуск...");
         $(".content .import button").attr("disabled", true);
-        this._post();
+        state.post();
     };
     
-    this._exit = function() {
+   state.exit = function() {
         $(".content .import button").attr("disabled", false);
+        $("#process-result").addClass("hide-elements");
         $("#progress-id").addClass("hide-elements");
     }
     
-    this._query = query;
-    this._init();
+    state.query = query;
+    state.init();
 }
 
 $(document).ready(function() {

@@ -20,6 +20,8 @@ use Application\Console\ConsoleWiki;
 use Application\Controllers\SiteController;
 use Application\Base\Connection;
 use Application\Models\Models;
+use Silex\Provider\SessionServiceProvider;
+use Twig\TwigFilter;
 
 class Bootstrap {
     protected $app;
@@ -34,7 +36,7 @@ class Bootstrap {
                 array(
                     'connection.host' => 'localhost',
                     'connection.user' => 'root',
-                    'connection.pwd' => '123456',
+                    'connection.pwd' => '',
                     'connection.db' => 'wiki'
                 )
             );
@@ -75,6 +77,48 @@ class Bootstrap {
         $this->app->register(
                 new TwigServiceProvider(), 
                 array('twig.path' => __DIR__.'/views', 'twig.cache' => false));
+        
+        $this->app->extend('twig', function($twig, $app) {
+            $twig->addFilter(new TwigFilter('bytes_format', function($val) { 
+                $ival = intval($val);
+                $s = 0;
+                
+                for($i = 0; $i < 3; ++$i) {
+                    if($ival >= 1024) {
+                       $ival /= 1204;
+                       ++$s;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                
+                $ival = number_format($ival, 2);
+                
+                switch($s) {
+                    case 0: $ival .= ' б'; break;
+                    case 1: $ival .= ' Кб'; break;
+                    case 2: $ival .= ' Мб'; break;
+                }
+                
+                return $ival; 
+            }));
+            $twig->addFilter(new TwigFilter('time_format', function($val) { 
+                $ival = intval($val);
+                
+                if($ival > 60) {
+                   $ival = intdiv($ival, 60) . ' мин ' . ($ival % 60) . ' секунд';
+                }
+                else {
+                    $ival = "$ival секунд";
+                }
+                
+                return $ival; 
+            }));
+            return $twig;
+        });
+        
+        $this->app->register(new SessionServiceProvider());
         $this->app->mount('/', new SiteController());
         $this->app->run();
     }
