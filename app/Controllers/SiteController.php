@@ -140,11 +140,11 @@ class SiteController implements ControllerProviderInterface {
         $match = 0;
         $articles = array();
         
-        $atoms = $app['atom']()->find('atom=?', array($search));
+        $atoms = $app['atom']()->find('atom=?', array(mb_strtolower($search)));
         if(count($atoms) > 0) {
             $links = $atoms[0]->links;
-            $match = count($links);
             foreach ($links as $link) {
+                $match += $link->counter;
                 $articles[$link->article_id] = array(
                     'id' => $link->article_id,
                     'match' => $link->counter);
