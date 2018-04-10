@@ -204,7 +204,7 @@ class Handler {
     
     private static function atomsSort(State $s) {
         $text = mb_strtolower($s->data['text']);
-        $text = mb_ereg_replace('/[^(a-z)|(A-Z)|(а-я)|(А-Я)|(0-9)|(\r)|(\n)|(\s)|(\t)]+/', '', $text);
+        $text = preg_replace('/[^(a-z)|(A-Z)|(а-я)|(А-Я)|(0-9)|(\r)|(\n)|(\s)|(\t)]+/', '', $text);
         $atosm = preg_split ('/[(\r)|(\n)|(\s)|(\t)]+/', $text);
         $count_ar = array_count_values ($atosm);
         

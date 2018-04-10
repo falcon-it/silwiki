@@ -28,6 +28,7 @@ class SiteController implements ControllerProviderInterface {
         $controllers->get('/', function (Application $app) {  return $this->indexAction($app); });
         $controllers->post('/copy/', function (Application $app) {  return $this->copyAction($app); });
         $controllers->post('/search/', function (Application $app) {  return $this->searchAction($app); });
+        $controllers->get('/article/{id}/', function (Application $app, $id) {  return $this->articleAction($app, $id); });
         return $controllers;
     }
     
@@ -54,18 +55,18 @@ class SiteController implements ControllerProviderInterface {
     public function copyAction(Application $app) {
         $req = Request::createFromGlobals();
         $ansver = array('process' => 0, 'result' => 'ok', 'exit' => false, 'message' => false);
-        $wikiStare = false;        
+        $wikiState = false;        
         
         if($app['session']->has('wiki')) {
-            $wikiStare = unserialize($app['session']->get('wiki'));
+            $wikiState = unserialize($app['session']->get('wiki'));
         }
         else {
-            $wikiStare = new State($req->get('query'));
+            $wikiState = new State($req->get('query'));
         }
         
-        Handler::Execute($wikiStare, $app);
+        Handler::Execute($wikiState, $app);
         
-        switch ($wikiStare->state) {
+        switch ($wikiState->state) {
             case State::WIKI_OK:
                 $ansver['process'] = 5;
                 break;
@@ -79,38 +80,38 @@ class SiteController implements ControllerProviderInterface {
                 $ansver['process'] = 25;
                 break;
             case State::ATOMS_SAVE:
-                $ansver['process'] = number_format(25 + ($wikiStare->getAtomsSaveProcess() * 75 / 100), 2);
+                $ansver['process'] = number_format(25 + ($wikiState->getAtomsSaveProcess() * 75 / 100), 2);
                 break;
             case State::OK:
                 $ansver['process'] = 100;
                 $ansver['exit'] = true;
                 $ansver['message'] = $app['twig']->render('result.twig', 
                         array(
-                            'link' => $wikiStare->data['link'], 
-                            'time' => $wikiStare->time, 
-                            'size' => $wikiStare->data['article_size'], 
-                            'count' => $wikiStare->data['atoms_count']
+                            'link' => $wikiState->data['link'], 
+                            'time' => $wikiState->time, 
+                            'size' => $wikiState->data['article_size'], 
+                            'count' => $wikiState->data['atoms_count']
                         ));
                 $ansver['table'] = $app['twig']->render('table.twig', 
                         array(
                             'article' => array(
-                                'title'=> $wikiStare->data['title'], 
-                                'link' => $wikiStare->data['link'], 
-                                'size' => $wikiStare->data['article_size'], 
-                                'count' => $wikiStare->data['atoms_count'])
+                                'title'=> $wikiState->data['title'], 
+                                'link' => $wikiState->data['link'], 
+                                'size' => $wikiState->data['article_size'], 
+                                'count' => $wikiState->data['atoms_count'])
                             ));
                 break;
             case State::WIKI_NOT_FOUND:
                 $ansver['process'] = 100;
                 $ansver['result'] = 'not_found';
                 $ansver['message'] = $app['twig']->render('not_found.twig', 
-                        array('query' => $wikiStare->query));
+                        array('query' => $wikiState->query));
                 break;
             case State::ART_SAVE_FAIL:
                 $ansver['process'] = 100;
                 $ansver['result'] = 'article_exsit';
                 $ansver['message'] = $app['twig']->render('article_exsit.twig', 
-                        array('query' => $wikiStare->query));
+                        array('query' => $wikiState->query));
                 break;
             case State::ERROR:
                 $ansver['process'] = 100;
@@ -118,16 +119,16 @@ class SiteController implements ControllerProviderInterface {
                 break;
         }
         
-        if(($wikiStare->state == State::OK) || 
-                ($wikiStare->state == State::ERROR) ||
-                ($wikiStare->state == State::ART_SAVE_FAIL) ||
-                ($wikiStare->state == State::WIKI_NOT_FOUND)) {
+        if(($wikiState->state == State::OK) || 
+                ($wikiState->state == State::ERROR) ||
+                ($wikiState->state == State::ART_SAVE_FAIL) ||
+                ($wikiState->state == State::WIKI_NOT_FOUND)) {
             if($app['session']->has('wiki')) {
                 $app['session']->remove('wiki');
             }
         }
         else {
-            $app['session']->set('wiki', serialize($wikiStare));
+            $app['session']->set('wiki', serialize($wikiState));
         }
         
         return $app->json($ansver);
@@ -156,5 +157,14 @@ class SiteController implements ControllerProviderInterface {
         }
         
         return $app->json(array('result' => $app['twig']->render('find_result.twig', array('match' => $match, 'articles' => $articles))));
+    }
+    
+    public function articleAction(Application $app, $id) {
+        $articles = $app['article']()->find('id=?', array($id));
+        $result = 'Ничего не найдено';
+        if(count($articles) > 0) {
+            $result = nl2br($articles[0]->article);
+        }
+        return $app->json(array('article' => $result));
     }
 }

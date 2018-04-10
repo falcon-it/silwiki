@@ -81,7 +81,13 @@ $(document).ready(function() {
         $(".content .import button").click(function() { Copy($(".content .import input").val()); });
         $(".content .find button").click(function() {
             $.post("/search/", { search : $(".content .find input").val() }, function(data, textStatus, jqXHR) {
-                
+                $(".find-result").html(data.result);
             });
+        });
+        $(".find-result").on('click', 'a', function(event) {
+            $.get("/article/" + $(this).attr("data-id") + "/", function(data, textStatus, jqXHR) {
+                $('.article').html(data.article);
+            });
+            event.preventDefault();
         });
 });
