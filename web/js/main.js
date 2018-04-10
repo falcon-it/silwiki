@@ -30,19 +30,23 @@ function Copy(query) {
                 $("#progress-id .uk-progress-bar").css("width", "100%").text("Успешно");
                 $("#process-result").removeClass("hide-elements").find(".import-result > div").html(data.message);
                 setTimeout(function() {
+                    $("#table-result > tbody").append(data.table);
                     state.exit();
-                }, 3000);
+                }, 5000);
             }
             else {
                 $("#progress-id .uk-progress-bar").css("width", data.process + "%").text(data.process + "%");
                 state.post();
             }
         }
+        else if(data.result == 'not_found') {
+            $("#progress-id .uk-progress-bar").css("width", "100%").text("Успешно");
+            $("#process-result").removeClass("hide-elements").find(".import-result > div").html(data.message);
+            setTimeout(function() { state.exit(); }, 5000);
+        }
         else {
             $("#progress-id .uk-progress-bar").css("width", "100%").text("Ошибка!!!");
-            setTimeout(function() {
-                state.exit();
-            }, 3000);
+            setTimeout(function() { state.exit(); }, 3000);
         }
     };
     

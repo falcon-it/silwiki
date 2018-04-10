@@ -51,7 +51,7 @@
                 <hr class="uk-grid-divider" />
                 <div class="uk-overflow-container">
                 	<div>
-	                	<table class="uk-table uk-table-striped">
+	                	<table class="uk-table uk-table-striped" id="table-result">
 	                		<thead>
 	                			<tr>
 	                				<th class="uk-width-3-10">Название статьи</th>
@@ -62,12 +62,7 @@
 	                		</thead>
 	                		<tbody>
                                             {% for article in articles %}
-	                			<tr>
-	                				<td>{{ article.title }}</td>
-                                                        <td><a href="{{ article.link }}">{{ article.link }}</a></td>
-	                				<td>{{ article.size|bytes_format }}</td>
-	                				<td>{{ article.count }}</td>
-	                			</tr>
+                                                {% include 'table.twig' with article %}
                                             {% endfor %}
 	                		</tbody>
 	                	</table>

@@ -94,6 +94,21 @@ class SiteController implements ControllerProviderInterface {
                             'size' => $wikiStare->data['article_size'], 
                             'count' => $wikiStare->data['atoms_count']
                         ));
+                $ansver['table'] = $app['twig']->render('table.twig', 
+                        array(
+                            'article' => array(
+                                'title'=> $wikiStare->data['title'], 
+                                'link' => $wikiStare->data['link'], 
+                                'size' => $wikiStare->data['article_size'], 
+                                'count' => $wikiStare->data['atoms_count'])
+                            ));
+                break;
+            case State::WIKI_NOT_FOUND:
+                $ansver['table'] = $wikiStare->query;
+                $ansver['process'] = 100;
+                $ansver['result'] = 'not_found';
+                $ansver['message'] = $app['twig']->render('not_found.twig', 
+                        array('query' => $wikiStare->query));
                 break;
             case State::ERROR:
                 $ansver['process'] = 100;
@@ -102,7 +117,8 @@ class SiteController implements ControllerProviderInterface {
         }
         
         if(($wikiStare->state == State::OK) || 
-                ($wikiStare->state == State::ERROR)) {
+                ($wikiStare->state == State::ERROR) ||
+                ($wikiStare->state == State::WIKI_NOT_FOUND)) {
             if($app['session']->has('wiki')) {
                 $app['session']->remove('wiki');
             }
