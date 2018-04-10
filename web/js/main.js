@@ -39,7 +39,7 @@ function Copy(query) {
                 state.post();
             }
         }
-        else if(data.result == 'not_found') {
+        else if((data.result == 'not_found') || (data.result == 'article_exsit')) {
             $("#progress-id .uk-progress-bar").css("width", "100%").text("Успешно");
             $("#process-result").removeClass("hide-elements").find(".import-result > div").html(data.message);
             setTimeout(function() { state.exit(); }, 5000);

@@ -104,10 +104,15 @@ class SiteController implements ControllerProviderInterface {
                             ));
                 break;
             case State::WIKI_NOT_FOUND:
-                $ansver['table'] = $wikiStare->query;
                 $ansver['process'] = 100;
                 $ansver['result'] = 'not_found';
                 $ansver['message'] = $app['twig']->render('not_found.twig', 
+                        array('query' => $wikiStare->query));
+                break;
+            case State::ART_SAVE_FAIL:
+                $ansver['process'] = 100;
+                $ansver['result'] = 'article_exsit';
+                $ansver['message'] = $app['twig']->render('article_exsit.twig', 
                         array('query' => $wikiStare->query));
                 break;
             case State::ERROR:
@@ -118,6 +123,7 @@ class SiteController implements ControllerProviderInterface {
         
         if(($wikiStare->state == State::OK) || 
                 ($wikiStare->state == State::ERROR) ||
+                ($wikiStare->state == State::ART_SAVE_FAIL) ||
                 ($wikiStare->state == State::WIKI_NOT_FOUND)) {
             if($app['session']->has('wiki')) {
                 $app['session']->remove('wiki');
