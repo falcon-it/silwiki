@@ -25,12 +25,9 @@ class SiteController implements ControllerProviderInterface {
     
     public function connect(Application $app) {
         $controllers = $app['controllers_factory'];
-        $controllers->get('/', function (Application $app) { 
-            return $this->indexAction($app);
-        });
-        $controllers->post('/copy/', function (Application $app) { 
-            return $this->copyAction($app);
-        });
+        $controllers->get('/', function (Application $app) {  return $this->indexAction($app); });
+        $controllers->post('/copy/', function (Application $app) {  return $this->copyAction($app); });
+        $controllers->post('/search/', function (Application $app) {  return $this->searchAction($app); });
         return $controllers;
     }
     
@@ -134,5 +131,30 @@ class SiteController implements ControllerProviderInterface {
         }
         
         return $app->json($ansver);
+    }
+    
+    public function searchAction(Application $app) {
+        $req = Request::createFromGlobals();
+        $search = $req->get('search');
+        $match = 0;
+        $articles = array();
+        
+        $atoms = $app['atom']()->find('atom=?', array($search));
+        if(count($atoms) > 0) {
+            $links = $atoms[0]->links;
+            $match = count($links);
+            foreach ($links as $link) {
+                $articles[$link->article_id] = array(
+                    'id' => $link->article_id,
+                    'match' => $link->counter);
+            }
+            
+            $articles_t = $app['article']()->find(implode(' OR ', array_fill(0, count($articles), 'id=?')), array_keys($articles));
+            foreach ($articles_t as $articles_t_i) {
+                $articles[$articles_t_i->id]['title'] = $articles_t_i->title;
+            }
+        }
+        
+        return $app->json(array('result' => $app['twig']->render('find_result.twig', array('match' => $match, 'articles' => $articles))));
     }
 }

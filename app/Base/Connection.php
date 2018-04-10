@@ -34,6 +34,9 @@ class Connection implements ServiceProviderInterface {
             //$db->debug = true;
             \ADOdb_Active_Record::SetDatabaseAdapter($db);
             \ADODB_Active_Record :: TableHasMany('articles', 'links', 'acticle_id');
+            \ADODB_Active_Record :: TableHasMany('atoms', 'links', 'atom_id');
+            \ADODB_Active_Record :: tableKeyHasMany('links', 'articles', 'articles', 'id');
+            //\ADODB_Active_Record :: TableBelongsTo('links', 'articles', 'acticle_id');
             //\ADODB_Active_Record :: ClassHasMany('Application\Models\Article', 'Application\Models\Link', 'acticle_id');
             return $db;
         };

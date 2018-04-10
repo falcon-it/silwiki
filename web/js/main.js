@@ -78,7 +78,10 @@ $(document).ready(function() {
 			set_size_elements();
 		}
 	});
-        $(".content .import button").click(function() {
-            Copy($(".content .import input").val());
+        $(".content .import button").click(function() { Copy($(".content .import input").val()); });
+        $(".content .find button").click(function() {
+            $.post("/search/", { search : $(".content .find input").val() }, function(data, textStatus, jqXHR) {
+                
+            });
         });
 });
