@@ -85,7 +85,17 @@ $(document).ready(function() {
             });
         });
         $(".find-result").on('click', 'a', function(event) {
-            $.get("/article/" + $(this).attr("data-id") + "/", function(data, textStatus, jqXHR) {
+            var id = $(this).parent('span').attr("data-id"),
+                text = $(this).text();
+            $(".find-result span.uk-text-large").each(function(indx, element) {
+                var set = $(element).find('a');
+                if(set.length == 0) {
+                    var _text = $(element).text();
+                    $(element).html("<a href=\"#\">" + _text + "</a>");
+                }
+            });
+            $(this).parent('span').text(text);
+            $.get("/article/" + id + "/", function(data, textStatus, jqXHR) {
                 $('.article').html(data.article);
             });
             event.preventDefault();

@@ -1,6 +1,6 @@
 <div>Найдено: {{ match }} совпадение</div>
 <ul class="uk-list uk-list-space">
     {% for article in articles %}
-	<li><span class="uk-text-large"><a href="#" data-id="{{ article.id }}">{{ article.title }}</a></span> <span class="uk-text-small">({{ article.match }} вхождений)</span></li>
+	<li><span class="uk-text-large" data-id="{{ article.id }}"><a href="#">{{ article.title }}</a></span> <span class="uk-text-small">({{ article.match }} вхождений)</span></li>
     {% endfor %}
 </ul>
