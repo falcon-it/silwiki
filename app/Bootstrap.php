@@ -9,7 +9,9 @@
 /**
  * Description of Bootstrap
  *
- * @author user2
+ * основные настройки прилоложения silex
+ * 
+ * @author ilya
  */
 
 namespace Application;
@@ -30,6 +32,11 @@ class Bootstrap {
         $this->app = new Application();
     }
     
+    /**
+     * основные сервисы для приложения
+     * соединение с бд
+     * и модели таблиц
+     */
     private function baseConfigure() {
         $this->app->register(
                 new Connection(), 
@@ -48,8 +55,15 @@ class Bootstrap {
             );
     }
     
+    /**
+     * запуск импорта из википедии с консоли
+     * второй параметр после имени скрипата команда
+     * третий и тд передаются в качестве массива команде
+     * @param type $argv
+     */
     public function console($argv) {
         $this->baseConfigure();
+        //регистрируем консольную команду
         $this->app->register(new ConsoleWiki());
         
         $command = false;
@@ -72,6 +86,10 @@ class Bootstrap {
         }
     }
     
+    /**
+     * запуск приложения через http
+     * регистрируем твиг, фильтры для него, сессии и контроллер для обработки запросов
+     */
     public function run() {
         $this->baseConfigure();
         $this->app->register(

@@ -10,6 +10,7 @@ namespace Application\Models;
 
 /**
  * Description of Models
+ * регистрируем модели таблиц
  *
  * @author ilya
  */

@@ -1,4 +1,5 @@
 
+//установим высоту рамок на странице
 function set_size_elements() {
 	$(".content").height(
 		$(window).height() - 
@@ -18,9 +19,11 @@ function set_size_elements() {
 		($(".content .find").outerHeight(true) - $(".content .find").height()));
 }
 
-$(window).on('load', function () { set_size_elements(); });
-$(window).on('resize', function () { set_size_elements(); });
+$(window).on('load', function () { set_size_elements(); });//после загрузки страницы
+$(window).on('resize', function () { set_size_elements(); });//при изменении размеров окна браузера
 
+//функция, которая циклично шлёт запросы серверу
+//пока тот не скопируем все данные из википедии или не вернёт ошибку
 function Copy(query) {
     var state = {};
     
@@ -70,7 +73,7 @@ function Copy(query) {
     state.init();
 }
 
-$(document).ready(function() {
+$(document).ready(function() {//обработчики 
 	$(".tabs > div").click(function() {
 		if(!$(this).hasClass("selected")) {
 			$(this).parent().children().removeClass("selected").eq($(this).index()).addClass("selected");

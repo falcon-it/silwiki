@@ -9,7 +9,7 @@
 namespace Application\Base;
 
 /**
- *
+ * общий интерфейс для выполнения консольных команд
  * @author ilya
  */
 interface ConsoleCommand {

@@ -38,9 +38,12 @@ class ConsoleWiki implements ServiceProviderInterface, ConsoleCommand {
         while(true) {
             $exit = false;
             
+            //много раз вызываем обработчитк
             Handler::Execute($s, $this->app);
             
             switch ($s->state) {
+                //пока не обработчик не установит состояния 
+                //когда он сделал всё что мог и дальше работать не будет
                 case State::ART_SAVE_FAIL:
                 case State::WIKI_NOT_FOUND:
                 case State::OK:

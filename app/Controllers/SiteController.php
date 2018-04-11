@@ -9,7 +9,7 @@
 /**
  * Description of SiteController
  *
- * @author user2
+ * @author ilya
  */
 
 namespace Application\Controllers;
@@ -23,6 +23,7 @@ use Application\Wiki\Handler;
 
 class SiteController implements ControllerProviderInterface {
     
+    //регистрируем обработчики запросов
     public function connect(Application $app) {
         $controllers = $app['controllers_factory'];
         $controllers->get('/', function (Application $app) {  return $this->indexAction($app); });
@@ -32,6 +33,7 @@ class SiteController implements ControllerProviderInterface {
         return $controllers;
     }
     
+    //индексная страница
     public function indexAction(Application $app) {
         $articles = $app['article']()->find('');
         $art_ar = array();
@@ -52,6 +54,14 @@ class SiteController implements ControllerProviderInterface {
         return $app['twig']->render('index.twig', array('title' => 'Wiki Test!', 'articles' => $art_ar));
     }
     
+    /**
+     * копируем данные из википедии
+     * разбиваем процесс на кучу шагов
+     * и с помощью js будем постоянно слать запросы
+     * пока не получим 100% или ошибку
+     * @param Application $app
+     * @return type
+     */
     public function copyAction(Application $app) {
         $req = Request::createFromGlobals();
         $ansver = array('process' => 0, 'result' => 'ok', 'exit' => false, 'message' => false);
@@ -134,6 +144,7 @@ class SiteController implements ControllerProviderInterface {
         return $app->json($ansver);
     }
     
+    //запрос поиска атомов
     public function searchAction(Application $app) {
         $req = Request::createFromGlobals();
         $search = $req->get('search');
@@ -159,6 +170,7 @@ class SiteController implements ControllerProviderInterface {
         return $app->json(array('result' => $app['twig']->render('find_result.twig', array('match' => $match, 'articles' => $articles))));
     }
     
+    //запрос текста статьи
     public function articleAction(Application $app, $id) {
         $articles = $app['article']()->find('id=?', array($id));
         $result = 'Ничего не найдено';
