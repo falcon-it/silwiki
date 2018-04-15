@@ -43,7 +43,7 @@ class Bootstrap {
                 array(
                     'connection.host' => 'localhost',
                     'connection.user' => 'root',
-                    'connection.pwd' => '',
+                    'connection.pwd' => '123456',
                     'connection.db' => 'wiki'
                 )
             );
@@ -94,7 +94,7 @@ class Bootstrap {
         $this->baseConfigure();
         $this->app->register(
                 new TwigServiceProvider(), 
-                array('twig.path' => __DIR__.'/views', 'twig.cache' => false));
+                array('twig.path' => __DIR__.'/views', 'twig.options' => array('cache' => __DIR__.'/cache','auto_reload' => true)));
         
         $this->app->extend('twig', function($twig, $app) {
             $twig->addFilter(new TwigFilter('bytes_format', function($val) { 
